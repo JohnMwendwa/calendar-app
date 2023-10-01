@@ -13,6 +13,10 @@ const eventSchema = new Schema<EventProps>({
     required: [true, "Please add event title!"],
     trim: true,
   },
+  start: {
+    type: Date,
+    required: [true, "Please add start date!"],
+  },
   allDay: {
     type: Boolean,
     default: false,
