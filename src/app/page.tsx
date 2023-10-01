@@ -5,7 +5,7 @@ import connectDB from "@/database/connection";
 
 const fetchEvents = async () => {
   await connectDB();
-  const data = await Event.find();
+  const data = await Event.find().sort({ start: -1 });
 
   // Serialize data
   const dataJSON = JSON.stringify(data);
@@ -16,7 +16,7 @@ export default async function Home() {
   const events = await fetchEvents();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main>
       <Calendar events={events} />
     </main>
   );
