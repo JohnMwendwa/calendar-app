@@ -13,6 +13,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import { EventProps } from "@/database/models/Event";
 import AddEventModal from "./AddEventModal";
 import DeleteEventModal from "./DeleteEventModal";
+import Sidebar from "./Sidebar";
 
 interface CalendarProps {
   events: EventProps[];
@@ -111,41 +112,49 @@ const Calendar = ({ events }: CalendarProps) => {
   };
 
   return (
-    <div>
-      <FullCalendar
-        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        headerToolbar={{
-          left: "prev,next today",
-          center: "title",
-          right: "dayGridMonth,timeGridWeek,timeGridDay",
-        }}
-        initialView="dayGridMonth"
-        nowIndicator={true}
-        editable={true}
-        droppable={true}
-        selectable={true}
-        selectMirror={true}
-        weekends={true}
-        dayMaxEvents={true}
-        events={allEvents}
-        dateClick={handleDateClick}
-        drop={(data) => handleDrop(data)}
-        eventClick={(data) => handleDelete(data)}
-      />
+    <div className="grid grid-cols-12 gap-8 h-screen">
+      <Sidebar allEvents={allEvents} />
+      <div className="col-span-9 p-8 overflow-y-auto">
+        <div className="mb-4 border-b border-violet-200 p-4">
+          <h1 className="font-bold text-4xl text-gray-700 text-center">
+            Calendar
+          </h1>
+        </div>
+        <FullCalendar
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          headerToolbar={{
+            left: "prev,next today",
+            center: "title",
+            right: "dayGridMonth,timeGridWeek,timeGridDay",
+          }}
+          initialView="dayGridMonth"
+          nowIndicator={true}
+          editable={true}
+          droppable={true}
+          selectable={true}
+          selectMirror={true}
+          weekends={true}
+          dayMaxEvents={true}
+          events={allEvents}
+          dateClick={handleDateClick}
+          drop={(data) => handleDrop(data)}
+          eventClick={(data) => handleDelete(data)}
+        />
 
-      <DeleteEventModal
-        showModal={showDeleteModal}
-        closeModal={handleCloseModal}
-        deleteEvent={handleDeleteEvent}
-      />
+        <DeleteEventModal
+          showModal={showDeleteModal}
+          closeModal={handleCloseModal}
+          deleteEvent={handleDeleteEvent}
+        />
 
-      <AddEventModal
-        showAddModal={showAddModal}
-        closeModal={handleCloseModal}
-        onSubmit={handleSubmit}
-        newEvent={newEvent}
-        onChange={handleChange}
-      />
+        <AddEventModal
+          showAddModal={showAddModal}
+          closeModal={handleCloseModal}
+          onSubmit={handleSubmit}
+          newEvent={newEvent}
+          onChange={handleChange}
+        />
+      </div>
     </div>
   );
 };
