@@ -4,6 +4,7 @@ export interface EventProps {
   _id: Types.ObjectId;
   title: string;
   start: Date | string;
+  end: Date | null;
   allDay: boolean;
 }
 
@@ -16,6 +17,10 @@ const eventSchema = new Schema<EventProps>({
   start: {
     type: Date,
     required: [true, "Please add start date!"],
+  },
+  end: {
+    type: Date,
+    default: null,
   },
   allDay: {
     type: Boolean,
