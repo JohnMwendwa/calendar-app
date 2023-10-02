@@ -7,7 +7,7 @@ interface SidebarProps {
 
 const Sidebar = ({ allEvents }: SidebarProps) => {
   return (
-    <aside className="col-span-3 text-white bg-gradient-to-br from-violet-600 to-violet-700 p-4 h-screen overflow-y-auto shadow-lg">
+    <aside className="hidden sm:block col-span-3 text-white bg-gradient-to-br from-violet-600 to-violet-700 p-4 h-screen overflow-y-auto shadow-lg">
       <h2 className="font-bold text-xl text-center mb-2">
         All Events ({allEvents?.length})
       </h2>
