@@ -3,9 +3,11 @@ import Calendar from "./components/Calendar";
 import Event from "@/database/models/Event";
 import connectDB from "@/database/connection";
 
+export const revalidate = 0;
+
 const fetchEvents = async () => {
   await connectDB();
-  const data = await Event.find().sort({ start: -1 });
+  const data = await Event.find({}).sort({ start: -1 });
 
   // Serialize data
   const dataJSON = JSON.stringify(data);
