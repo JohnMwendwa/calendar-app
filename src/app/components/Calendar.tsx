@@ -132,7 +132,7 @@ const Calendar = ({ events }: CalendarProps) => {
   return (
     <div className="grid grid-cols-12 gap-8 h-screen">
       <Sidebar allEvents={allEvents} />
-      <div className="col-span-9 p-8 overflow-y-auto">
+      <div className="col-span-12 sm:col-span-9 p-8 overflow-y-auto">
         <div className="mb-4 border-b border-violet-200 p-4">
           <h1 className="font-bold text-4xl text-gray-700 text-center">
             Calendar
