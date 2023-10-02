@@ -29,7 +29,7 @@ input {
 }
 
 .fc-h-event {
-  @apply bg-violet-500 border border-violet-600;
+  @apply bg-violet-500 border border-violet-600 text-center;
 }
 
 .fc .fc-daygrid-day.fc-day-today {
