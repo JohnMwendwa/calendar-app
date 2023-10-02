@@ -2,13 +2,11 @@
 
 import { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import interactionPlugin, {
-  Draggable,
-  DropArg,
-} from "@fullcalendar/interaction";
+import interactionPlugin, { EventDragStopArg } from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
+import { EventSourceInput } from "@fullcalendar/core/index.js";
 
 import { EventProps } from "@/database/models/Event";
 import AddEventModal from "./AddEventModal";
@@ -28,6 +26,7 @@ const Calendar = ({ events }: CalendarProps) => {
     title: "",
     start: "",
     allDay: false,
+    end: null,
   });
   const router = useRouter();
 
@@ -54,6 +53,7 @@ const Calendar = ({ events }: CalendarProps) => {
       title: "",
       start: "",
       allDay: false,
+      end: null,
     });
   };
 
@@ -80,7 +80,24 @@ const Calendar = ({ events }: CalendarProps) => {
     setIdToDelete(undefined);
   };
 
-  const handleDrop = (data: DropArg) => {};
+  const handleDrop = async (data: EventDragStopArg) => {
+    console.log(data.event);
+
+    const res = await fetch("/api/events", {
+      method: "PATCH",
+      body: JSON.stringify({
+        id: data.event.extendedProps._id,
+        start: data.event.start,
+        end: data.event.end,
+        allDay: data.event.allDay,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    await res.json();
+    router.refresh();
+  };
 
   // update new event values
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -108,6 +125,7 @@ const Calendar = ({ events }: CalendarProps) => {
       title: "",
       start: "",
       allDay: false,
+      end: null,
     });
   };
 
@@ -135,10 +153,10 @@ const Calendar = ({ events }: CalendarProps) => {
           selectMirror={true}
           weekends={true}
           dayMaxEvents={true}
-          events={allEvents}
+          events={allEvents as EventSourceInput}
           dateClick={handleDateClick}
-          drop={(data) => handleDrop(data)}
           eventClick={(data) => handleDelete(data)}
+          eventDrop={(data) => handleDrop(data)}
         />
 
         <DeleteEventModal
