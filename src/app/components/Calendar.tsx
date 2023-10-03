@@ -132,9 +132,9 @@ const Calendar = ({ events }: CalendarProps) => {
   return (
     <div className="grid grid-cols-12 gap-8 h-screen">
       <Sidebar allEvents={allEvents} />
-      <div className="col-span-12 sm:col-span-9 p-8 overflow-y-auto">
+      <div className="relative col-span-12 sm:col-span-9 p-8 overflow-y-auto h-full">
         <div className="mb-4 border-b border-violet-200 p-4">
-          <h1 className="font-bold text-4xl text-gray-700 text-center">
+          <h1 className="font-bold text-4xl text-violet-700 text-center">
             Calendar
           </h1>
         </div>
@@ -157,22 +157,34 @@ const Calendar = ({ events }: CalendarProps) => {
           dateClick={handleDateClick}
           eventClick={(data) => handleDelete(data)}
           eventDrop={(data) => handleDrop(data)}
+          aspectRatio={1.8}
         />
 
-        <DeleteEventModal
-          showModal={showDeleteModal}
-          closeModal={handleCloseModal}
-          deleteEvent={handleDeleteEvent}
-        />
-
-        <AddEventModal
-          showAddModal={showAddModal}
-          closeModal={handleCloseModal}
-          onSubmit={handleSubmit}
-          newEvent={newEvent}
-          onChange={handleChange}
-        />
+        <div className="mt-8">
+          <h3 className="font-bold text-xl text-violet-600 underline underline-offset-2">
+            Instructions
+          </h3>
+          <ul className="list-disc">
+            <li>Select dates and you will be prompted to create a new event</li>
+            <li>Drag, drop and resize events</li>
+            <li>Click an event to delete it</li>
+          </ul>
+        </div>
       </div>
+
+      <DeleteEventModal
+        showModal={showDeleteModal}
+        closeModal={handleCloseModal}
+        deleteEvent={handleDeleteEvent}
+      />
+
+      <AddEventModal
+        showAddModal={showAddModal}
+        closeModal={handleCloseModal}
+        onSubmit={handleSubmit}
+        newEvent={newEvent}
+        onChange={handleChange}
+      />
     </div>
   );
 };
